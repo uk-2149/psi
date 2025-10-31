@@ -576,7 +576,7 @@ export default function ProjectsSection() {
               {index === i && (
                 <motion.div
                   className="h-full rounded-full"
-                  style={{ background: projects[i].color }}
+                  style={{ background: projects[i]!.color }}
                   layoutId="activeProgress"
                 />
               )}
