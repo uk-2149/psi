@@ -155,6 +155,9 @@ export default function ProjectsSection() {
     }),
   };
 
+  if (!projects[index]) return null;
+
+
   return (
     <motion.section
       ref={sectionRef}
@@ -176,7 +179,7 @@ export default function ProjectsSection() {
       <motion.div
         className="absolute bottom-20 right-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
         style={{
-          background: projects[(index + 1) % projects.length].color,
+          background: projects[(index + 1) % projects!.length]!.color,
         }}
         animate={{
           scale: [1.2, 1, 1.2],
