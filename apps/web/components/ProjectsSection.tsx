@@ -6,6 +6,7 @@ import {
   useScroll,
   useTransform,
   AnimatePresence,
+  useInView
 } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
@@ -25,7 +26,7 @@ const projects: Project[] = [
     id: "01",
     title: "ChitChat",
     description:
-      "A cutting-edge, full-stack real-time communication platform that brings people together through seamless messaging, crystal-clear video calls, and intelligent AI assistance. Built with modern web technologies including React, TypeScript, Express, MongoDB, and Redis, ChitChat delivers enterprise-grade performance with a consumer-friendly experience.",
+      "A cutting-edge, full-stack real-time communication platform that brings people together through seamless messaging, crystal-clear video calls, and intelligent AI assistance.",
     image:
       "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
     category: "Web Development",
@@ -44,7 +45,7 @@ const projects: Project[] = [
     id: "02",
     title: "Draw.wine",
     description:
-      "A modern, real-time collaborative drawing application built with React, TypeScript, Node.js, and Socket.IO. Draw.Wine allows multiple users to collaborate on digital canvases in real-time with a rich set of drawing tools and features.",
+      "A modern, real-time collaborative drawing application, allows multiple users to collaborate on digital canvases in real-time with a rich set of drawing tools and features.",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
     category: "Web Development",
@@ -81,9 +82,8 @@ const projects: Project[] = [
     id: "04",
     title: "Testimonial.io clone",
     description:
-      "A full-stack application that lets users collect, manage, and display client testimonials with ease. It allows you to create shareable links to gather testimonials from clients, which can then be organized and showcased through a clean dashboard.The platform also supports website integration, enabling users to embed testimonials directly into their own websites with simple scripts",
-    image:
-      "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop",
+      "A platform to collect, manage, and showcase client testimonials effortlessly. Create shareable links, customize displays, and embed them seamlessly into your website.",
+    image: "/testimonial.png",
     category: "Web Development",
     color: "#F472B6",
     techStack: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
@@ -94,6 +94,7 @@ export default function ProjectsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const isInView = useInView(sectionRef, { amount: 0.96 });
   const maxIndex = projects.length - 1;
 
   const { scrollYProgress } = useScroll({
@@ -101,17 +102,24 @@ export default function ProjectsSection() {
     offset: ["start end", "end start"],
   });
 
-  const bg = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.4, 0.9, 1],
-    [
-      "hsl(0, 0%, 8%)",
-      "hsl(0, 0%, 8%)",
-      "hsl(0, 0%, 8%)",
-      "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)",
-      "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-    ]
-  );
+  // const bg = useTransform(
+  //   scrollYProgress,
+  //   [0, 0.3, 0.4, 0.9, 1],
+  //   [
+  //     "hsl(0, 0%, 8%)",
+  //     "hsl(0, 0%, 8%)",
+  //     "hsl(0, 0%, 8%)",
+  //     "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)",
+  //     "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+  //   ]
+  // );
+
+  // const bg = useTransform(scrollYProgress, (progress) => {
+  //   if (progress > 0.1 && progress < 0.9) {
+  //     return "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)";
+  //   }
+  //   return "hsl(0, 0%, 8%)";
+  // });
 
   const goPrev = () => {
     setDirection(-1);
@@ -157,12 +165,16 @@ export default function ProjectsSection() {
 
   if (!projects[index]) return null;
 
-
   return (
     <motion.section
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden"
-      style={{ background: bg }}
+      // style={{ background: bg }}
+      animate={{
+        background: isInView
+          ? "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)"
+          : "hsl(0, 0%, 8%)",
+      }}
     >
       {/* Animated gradient orbs */}
       <motion.div
@@ -303,11 +315,11 @@ export default function ProjectsSection() {
                   transition={{ duration: 0.3 }}
                 >
                   {/* HEADER – Image + Badge */}
-                  <div className="relative h-[45%] md:h-[55%] overflow-hidden">
+                  <div className="relative h-[45%] md:h-[70%] overflow-hidden">
                     <motion.img
                       src={projects[index].image}
                       alt={projects[index].title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover scale-115"
                       initial={{ scale: 1.3 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.9, ease: "easeOut" }}
@@ -373,20 +385,14 @@ export default function ProjectsSection() {
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.4 }}
                       >
+                        {" "}
                         {projects[index].techStack.map((tech, i) => (
                           <motion.span
                             key={tech}
-                            className="
-                      px-3 py-1 text-xs font-mono
-                      bg-gray-800/70 backdrop-blur-sm
-                      text-cyan-200 border border-cyan-700/40
-                      rounded-full
-                      flex items-center gap-1.5
-                      transition-all duration-200
-                    "
+                            className=" px-3 py-1 text-xs font-mono bg-gray-800/70 backdrop-blur-sm text-cyan-200 border border-cyan-700/40 rounded-full flex items-center gap-1.5 transition-all duration-200 "
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.45 + i * 0.05 }}
+                            transition={{ delay: 0.15 + i * 0.05 }}
                             whileHover={{
                               scale: 1.1,
                               backgroundColor: "rgba(34,211,238,0.15)",
@@ -394,10 +400,13 @@ export default function ProjectsSection() {
                               color: "#67e8f9",
                             }}
                           >
-                            <span className="text-cyan-400 text-[10px]">◆</span>
-                            {tech}
+                            {" "}
+                            <span className="text-cyan-400 text-[10px]">
+                              ◆
+                            </span>{" "}
+                            {tech}{" "}
                           </motion.span>
-                        ))}
+                        ))}{" "}
                       </motion.div>
                     </div>
 
@@ -481,7 +490,7 @@ export default function ProjectsSection() {
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="text-xs uppercase tracking-widest text-gray-400 font-semibold mb-2">
+          <div className="text-xs uppercase tracking-widest text-gray-400 font-semibold mb-6">
             Projects
           </div>
 
@@ -514,7 +523,7 @@ export default function ProjectsSection() {
                     alt={p.title}
                     width={400}
                     height={400}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover scale-145"
                   />
                   {index === i && (
                     <motion.div

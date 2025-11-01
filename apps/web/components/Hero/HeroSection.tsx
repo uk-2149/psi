@@ -5,7 +5,7 @@ import { Play, Mail, ArrowRight, X } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-[90vh] bg-bg text-textPrimary overflow-hidden">
+    <section className="relative min-h-[90vh] bg-bg text-textPrimary overflow-hidden mt-15">
       {/* Background Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-106 h-106 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
