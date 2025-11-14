@@ -4,11 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import {
   motion,
   useScroll,
-  useTransform,
   AnimatePresence,
   useInView
 } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Github } from "lucide-react";
 import Image from "next/image";
 
 interface Project {
@@ -19,6 +18,9 @@ interface Project {
   category: string;
   color: string;
   techStack: string[];
+  github: string;
+  liveLink: string;
+  scale: number;
 }
 
 const projects: Project[] = [
@@ -28,7 +30,7 @@ const projects: Project[] = [
     description:
       "A cutting-edge, full-stack real-time communication platform that brings people together through seamless messaging, crystal-clear video calls, and intelligent AI assistance.",
     image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop",
+      "/chitchat.png",
     category: "Web Development",
     color: "#FCD34D",
     techStack: [
@@ -40,6 +42,9 @@ const projects: Project[] = [
       "Redis",
       "Socket.IO",
     ],
+    github: "https://github.com/uk-2149/chitchat-uk",
+    liveLink: "https://chitchat.vercel.app/",
+    scale: 50,
   },
   {
     id: "02",
@@ -47,7 +52,7 @@ const projects: Project[] = [
     description:
       "A modern, real-time collaborative drawing application, allows multiple users to collaborate on digital canvases in real-time with a rich set of drawing tools and features.",
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      "/drawine.png",
     category: "Web Development",
     color: "#818CF8",
     techStack: [
@@ -59,14 +64,17 @@ const projects: Project[] = [
       "Redis",
       "Helmet",
     ],
+    github: "https://github.com/uk-2149/draw.wine",
+    liveLink: "https://drawine.vercel.app/",
+    scale: 90,
   },
   {
     id: "03",
-    title: "JournAI",
+    title: "QuizGen",
     description:
-      "An AI-powered journaling companion that tracks your mood, helps you reflect through smart conversations, and uplifts you with personalized motivational quotes.",
+      "QuizGen is a web-based tool that allows users to upload typed documents or PDF files and convert them into customizable quizzes. It supports setting the difficulty level, choosing question types, and adding custom prompts to generate tailored quizzes. The quizzes can then be downloaded with answers at the end.",
     image:
-      "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&h=600&fit=crop",
+      "/QuizGen.png",
     category: "Web Development",
     color: "#34D399",
     techStack: [
@@ -75,8 +83,10 @@ const projects: Project[] = [
       "Node.js",
       "Express",
       "Gemini API",
-      "MongoDB",
     ],
+    github: "https://github.com/uk-2149/pdf-quiz",
+    liveLink: "https://quizgen-xi.vercel.app/",
+    scale: 70,
   },
   {
     id: "04",
@@ -87,6 +97,9 @@ const projects: Project[] = [
     category: "Web Development",
     color: "#F472B6",
     techStack: ["React", "TypeScript", "Node.js", "Express", "MongoDB"],
+    github: "https://github.com/uk-2149/testimonial-clone",
+    liveLink: "https://testimonial-uk-97.vercel.app/dashboard",
+    scale: 100,
   },
 ];
 
@@ -189,7 +202,7 @@ export default function ProjectsSection() {
         transition={{ duration: 4, repeat: Infinity }}
       />
       <motion.div
-        className="absolute bottom-20 right-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
+        className="absolute bottom-50 right-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
         style={{
           background: projects[(index + 1) % projects!.length]!.color,
         }}
@@ -319,7 +332,7 @@ export default function ProjectsSection() {
                     <motion.img
                       src={projects[index].image}
                       alt={projects[index].title}
-                      className="w-full h-full object-cover scale-115"
+                      className={`w-full h-full object-cover scale-${projects[index].scale}`}
                       initial={{ scale: 1.3 }}
                       animate={{ scale: 1 }}
                       transition={{ duration: 0.9, ease: "easeOut" }}
@@ -417,26 +430,31 @@ export default function ProjectsSection() {
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.5 }}
                     >
-                      <motion.button
+                      <motion.a
+                        href={projects[index].github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="
-                  px-5 py-2.5 rounded-md
-                  bg-cyan-500 text-gray-950 font-mono text-sm md:text-base
-                  shadow-lg shadow-cyan-500/30
-                  flex items-center gap-2
-                  font-medium
-                "
+                          px-5 py-2.5 rounded-md
+                          bg-cyan-500 text-gray-950 font-mono text-sm md:text-base
+                          shadow-lg shadow-cyan-500/30
+                          flex items-center gap-2
+                          font-medium
+                        "
                         whileHover={{
                           scale: 1.06,
                           boxShadow: "0 0 25px rgba(34,211,238,0.5)",
                         }}
                         whileTap={{ scale: 0.95 }}
-                        aria-label="View case study"
+                        aria-label="View source code on GitHub"
                       >
-                        <span className="text-xs">➜</span>
-                        View More
-                      </motion.button>
+                        <Github className="h-4 w-4" />
+                        GitHub
+                      </motion.a>
 
-                      <motion.button
+                      <motion.a
+                        href={projects[index].liveLink}
+                        target="_blank"
                         className="
                   px-5 py-2.5 rounded-md border border-cyan-500/50
                   text-cyan-300 font-mono text-sm md:text-base
@@ -453,7 +471,7 @@ export default function ProjectsSection() {
                         aria-label="See all work"
                       >
                         <span className="text-xs">↗</span>
-                      </motion.button>
+                      </motion.a>
                     </motion.div>
                   </div>
                 </motion.div>
@@ -523,7 +541,7 @@ export default function ProjectsSection() {
                     alt={p.title}
                     width={400}
                     height={400}
-                    className="w-full h-full object-cover scale-145"
+                    className="w-full h-full object-cover"
                   />
                   {index === i && (
                     <motion.div

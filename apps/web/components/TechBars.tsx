@@ -7,7 +7,6 @@ import {
   useTransform,
   useAnimationFrame,
   useInView,
-  AnimatePresence,
 } from "framer-motion";
 
 const techStacks = [
@@ -113,7 +112,7 @@ const Tech = ({
       <motion.span
         className="block text-2xl md:text-4xl font-bold tracking-tight"
         animate={{
-          color: hovered ? "#67e8f9" : "#e5e5e5",
+          color: hovered ? "hsl(50, 100%, 50%)" : "#e5e5e5",
         }}
         transition={{ duration: 0.3 }}
       >
@@ -170,7 +169,7 @@ export default function TechBars({ opp }: TechBarsProps) {
   return (
     <section
       ref={ref}
-      className="relative md:min-h-screen bg-gray-950 overflow-hidden flex flex-col justify-center py-16 md:py-24"
+      className="relative md:min-h-screen bg-bg overflow-hidden flex flex-col justify-center py-16 md:py-24"
     >
       {/* Grain effect */}
       <div className="pointer-events-none absolute inset-0 opacity-10 mix-blend-overlay">
