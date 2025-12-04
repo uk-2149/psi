@@ -169,7 +169,7 @@ export default function TechBars({ opp }: TechBarsProps) {
   return (
     <section
       ref={ref}
-      className="relative md:min-h-screen bg-bg overflow-hidden flex flex-col justify-center py-16 md:py-24"
+      className="relative bg-bg overflow-hidden flex flex-col justify-center pt-16 md:pt-24 pb-0"
     >
       {/* Grain effect */}
       <div className="pointer-events-none absolute inset-0 opacity-10 mix-blend-overlay">

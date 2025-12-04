@@ -29,19 +29,10 @@ const projects: Project[] = [
     title: "ChitChat",
     description:
       "A cutting-edge, full-stack real-time communication platform that brings people together through seamless messaging, crystal-clear video calls, and intelligent AI assistance.",
-    image:
-      "/chitchat.png",
+    image: "/chitchat.png",
     category: "Web Development",
     color: "#FCD34D",
-    techStack: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "MongoDB",
-      "Redis",
-      "Socket.IO",
-    ],
+    techStack: ["React", "TypeScript", "Node.js", "Express", "MongoDB", "Redis", "Socket.IO"],
     github: "https://github.com/uk-2149/chitchat-uk",
     liveLink: "https://chitchat.vercel.app/",
     scale: 50,
@@ -51,19 +42,10 @@ const projects: Project[] = [
     title: "Draw.wine",
     description:
       "A modern, real-time collaborative drawing application, allows multiple users to collaborate on digital canvases in real-time with a rich set of drawing tools and features.",
-    image:
-      "/drawine.png",
+    image: "/drawine.png",
     category: "Web Development",
     color: "#818CF8",
-    techStack: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "Socket.IO",
-      "Redis",
-      "Helmet",
-    ],
+    techStack: ["React", "TypeScript", "Node.js", "Express", "Socket.IO", "Redis", "Helmet"],
     github: "https://github.com/uk-2149/draw.wine",
     liveLink: "https://drawine.vercel.app/",
     scale: 90,
@@ -73,17 +55,10 @@ const projects: Project[] = [
     title: "QuizGen",
     description:
       "QuizGen is a web-based tool that allows users to upload typed documents or PDF files and convert them into customizable quizzes. It supports setting the difficulty level, choosing question types, and adding custom prompts to generate tailored quizzes. The quizzes can then be downloaded with answers at the end.",
-    image:
-      "/QuizGen.png",
+    image: "/QuizGen.png",
     category: "Web Development",
     color: "#34D399",
-    techStack: [
-      "React",
-      "TypeScript",
-      "Node.js",
-      "Express",
-      "Gemini API",
-    ],
+    techStack: ["React", "TypeScript", "Node.js", "Express", "Gemini API"],
     github: "https://github.com/uk-2149/pdf-quiz",
     liveLink: "https://quizgen-xi.vercel.app/",
     scale: 70,
@@ -114,25 +89,6 @@ export default function ProjectsSection() {
     target: sectionRef,
     offset: ["start end", "end start"],
   });
-
-  // const bg = useTransform(
-  //   scrollYProgress,
-  //   [0, 0.3, 0.4, 0.9, 1],
-  //   [
-  //     "hsl(0, 0%, 8%)",
-  //     "hsl(0, 0%, 8%)",
-  //     "hsl(0, 0%, 8%)",
-  //     "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)",
-  //     "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
-  //   ]
-  // );
-
-  // const bg = useTransform(scrollYProgress, (progress) => {
-  //   if (progress > 0.1 && progress < 0.9) {
-  //     return "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)";
-  //   }
-  //   return "hsl(0, 0%, 8%)";
-  // });
 
   const goPrev = () => {
     setDirection(-1);
@@ -182,8 +138,8 @@ export default function ProjectsSection() {
     <motion.section
       ref={sectionRef}
       className="relative min-h-screen overflow-hidden"
-      // style={{ background: bg }}
       animate={{
+        // gradient stays while section is in view (mobile & desktop)
         background: isInView
           ? "linear-gradient(135deg, #312E81 0%, #1E1B4B 100%)"
           : "hsl(0, 0%, 8%)",
@@ -192,24 +148,14 @@ export default function ProjectsSection() {
       {/* Animated gradient orbs */}
       <motion.div
         className="absolute top-45 left-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
-        style={{
-          background: projects[index].color,
-        }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.2, 0.3, 0.2],
-        }}
+        style={{ background: projects[index].color }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.3, 0.2] }}
         transition={{ duration: 4, repeat: Infinity }}
       />
       <motion.div
         className="absolute bottom-50 right-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
-        style={{
-          background: projects[(index + 1) % projects!.length]!.color,
-        }}
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.2, 0.3],
-        }}
+        style={{ background: projects[(index + 1) % projects.length]?.color }}
+        animate={{ scale: [1.2, 1, 1.2], opacity: [0.3, 0.2, 0.3] }}
         transition={{ duration: 4, repeat: Infinity, delay: 2 }}
       />
 
@@ -217,17 +163,104 @@ export default function ProjectsSection() {
       <div className="pointer-events-none absolute inset-0 opacity-[0.15] mix-blend-overlay">
         <svg className="w-full h-full">
           <filter id="noise">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.8"
-              numOctaves="4"
-            />
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
           </filter>
           <rect width="100%" height="100%" filter="url(#noise)" />
         </svg>
       </div>
 
-      <div className="relative flex h-screen items-center justify-between px-4 md:px-8 lg:px-16">
+      {/* MOBILE-ONLY LAYOUT */}
+      <div className="md:hidden relative z-20">
+        {/* Title strip */}
+        <div className="px-4 pt-10 pb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 border border-white/20 text-white/80 text-xs uppercase tracking-widest">
+            <span className="w-2 h-2 bg-green-400 rounded-full" />
+            Web Development
+          </div>
+        </div>
+
+        {/* Snap scroller: one polished card per viewport */}
+        <div className="h-[calc(100vh-64px)] overflow-y-auto snap-y snap-mandatory px-4 space-y-6 pb-10">
+          {projects.map((p, i) => (
+            <motion.article
+              key={p.id}
+              className="snap-start rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl shadow-2xl"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+            >
+              {/* Image */}
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  className="object-cover"
+                  priority={i < 2}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/60 to-transparent" />
+                <div
+                  className="absolute top-3 right-3 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider border"
+                  style={{ borderColor: `${p.color}80`, color: p.color, background: "#0b1220cc" }}
+                >
+                  {p.category}
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-4 space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-base font-mono font-bold">
+                  <span className="text-green-400">$</span>
+                  {p.title}
+                </div>
+
+                <p className="text-gray-300/90 text-sm leading-relaxed">
+                  {p.description}
+                </p>
+
+                {/* Tech chips – horizontal scroll if overflow */}
+                <div className="flex gap-2 overflow-x-auto no-scrollbar pt-1">
+                  {p.techStack.map((t) => (
+                    <span
+                      key={t}
+                      className="shrink-0 px-2.5 py-1 text-[11px] font-mono bg-slate-900/70 border border-cyan-700/30 text-cyan-200 rounded-full"
+                    >
+                      ◆ {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-2">
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-md bg-cyan-500 text-slate-950 font-mono text-sm shadow-lg shadow-cyan-500/30"
+                    aria-label="View source code on GitHub"
+                  >
+                    <Github className="h-4 w-4" />
+                    GitHub
+                  </a>
+                  <a
+                    href={p.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm backdrop-blur-sm"
+                    aria-label="Open live demo"
+                  >
+                    ↗
+                  </a>
+                </div>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+
+      {/* DESKTOP/TABLET */}
+      <div className="relative hidden md:flex h-screen items-center justify-between px-4 md:px-8 lg:px-16">
         {/* LEFT SIDEBAR */}
         <motion.div
           className="hidden md:flex flex-col items-start space-y-8 z-20"
@@ -259,9 +292,7 @@ export default function ProjectsSection() {
                   setIndex(i);
                 }}
                 className={`flex items-center gap-3 px-4 py-2 rounded-lg transition-all ${
-                  index === i
-                    ? "bg-white/10 backdrop-blur-md"
-                    : "hover:bg-white/5"
+                  index === i ? "bg-white/10 backdrop-blur-md" : "hover:bg-white/5"
                 }`}
                 whileHover={{ x: 5 }}
               >
@@ -285,16 +316,9 @@ export default function ProjectsSection() {
         </motion.div>
 
         {/* MAIN CAROUSEL */}
-        <div className="flex-1 flex items-center justify-center px-4 md:px-12 lg:px-20">
-          <motion.div
-            className="relative w-full max-w-5xl h-[70vh] md:h-[80vh]"
-            style={{ perspective: 2000 }}
-          >
-            <AnimatePresence
-              initial={false}
-              custom={direction}
-              mode="popLayout"
-            >
+        <div className="flex-1 md:flex items-center justify-center px-4 md:px-12 lg:px-20">
+          <motion.div className="relative w-full max-w-5xl h-[70vh] md:h-[80vh]" style={{ perspective: 2000 }}>
+            <AnimatePresence initial={false} custom={direction} mode="popLayout">
               <motion.div
                 key={index}
                 custom={direction}
@@ -312,14 +336,7 @@ export default function ProjectsSection() {
               >
                 {/* DEVELOPER CARD */}
                 <motion.div
-                  className="
-            relative w-full h-full
-            bg-gray-950/95 backdrop-blur-2xl
-            rounded-xl overflow-hidden
-            border border-cyan-500/30
-            shadow-2xl shadow-cyan-500/10
-            flex flex-col
-          "
+                  className="relative w-full h-full bg-gray-950/95 backdrop-blur-2xl rounded-xl overflow-hidden border border-cyan-500/30 shadow-2xl shadow-cyan-500/10 flex flex-col"
                   whileHover={{
                     scale: 1.015,
                     boxShadow: "0 0 50px rgba(34,211,238,0.25)",
@@ -338,16 +355,8 @@ export default function ProjectsSection() {
                       transition={{ duration: 0.9, ease: "easeOut" }}
                     />
                     <div className="absolute inset-0 bg-linear-to-t from-gray-950 via-gray-950/70 to-transparent" />
-
-                    {/* Terminal Badge */}
                     <motion.div
-                      className="
-                absolute top-4 right-4
-                px-3 py-1.5 rounded-md
-                bg-gray-900/90 border border-cyan-400/50
-                text-cyan-300 text-xs font-mono uppercase tracking-wider
-                flex items-center gap-2
-              "
+                      className="absolute top-4 right-4 px-3 py-1.5 rounded-md bg-gray-900/90 border border-cyan-400/50 text-cyan-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2"
                       initial={{ y: -20, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ delay: 0.3 }}
@@ -359,29 +368,17 @@ export default function ProjectsSection() {
 
                   {/* BODY */}
                   <div className="flex-1 p-5 md:p-8 flex flex-col justify-between text-left">
-                    {/* Title */}
                     <div className="space-y-3">
                       <motion.div
-                        className="
-                  inline-flex items-center gap-2.5
-                  px-4 py-2 rounded-md
-                  bg-cyan-500/10 border border-cyan-500/40
-                  text-cyan-300 text-lg md:text-2xl font-mono font-bold
-                  tracking-tight
-                "
+                        className="inline-flex items-center gap-2.5 px-4 py-2 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-lg md:text-2xl font-mono font-bold tracking-tight"
                         initial={{ x: -50, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
-                        transition={{
-                          delay: 0.2,
-                          type: "spring",
-                          stiffness: 220,
-                        }}
+                        transition={{ delay: 0.2, type: "spring", stiffness: 220 }}
                       >
                         <span className="text-green-400">$</span>
                         {projects[index].title}
                       </motion.div>
 
-                      {/* Description */}
                       <motion.p
                         className="text-gray-400 text-sm md:text-base leading-relaxed font-light max-w-2xl"
                         initial={{ y: 20, opacity: 0 }}
@@ -391,18 +388,16 @@ export default function ProjectsSection() {
                         {projects[index].description}
                       </motion.p>
 
-                      {/* TECH STACK CHIPS */}
                       <motion.div
                         className="flex flex-wrap gap-2 mt-4"
                         initial={{ y: 20, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         transition={{ delay: 0.4 }}
                       >
-                        {" "}
                         {projects[index].techStack.map((tech, i) => (
                           <motion.span
                             key={tech}
-                            className=" px-3 py-1 text-xs font-mono bg-gray-800/70 backdrop-blur-sm text-cyan-200 border border-cyan-700/40 rounded-full flex items-center gap-1.5 transition-all duration-200 "
+                            className="px-3 py-1 text-xs font-mono bg-gray-800/70 backdrop-blur-sm text-cyan-200 border border-cyan-700/40 rounded-full flex items-center gap-1.5 transition-all duration-200"
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.15 + i * 0.05 }}
@@ -413,17 +408,13 @@ export default function ProjectsSection() {
                               color: "#67e8f9",
                             }}
                           >
-                            {" "}
-                            <span className="text-cyan-400 text-[10px]">
-                              ◆
-                            </span>{" "}
-                            {tech}{" "}
+                            <span className="text-cyan-400 text-[10px]">◆</span>
+                            {tech}
                           </motion.span>
-                        ))}{" "}
+                        ))}
                       </motion.div>
                     </div>
 
-                    {/* ACTIONS */}
                     <motion.div
                       className="flex flex-wrap gap-3 mt-6"
                       initial={{ y: 30, opacity: 0 }}
@@ -434,17 +425,8 @@ export default function ProjectsSection() {
                         href={projects[index].github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="
-                          px-5 py-2.5 rounded-md
-                          bg-cyan-500 text-gray-950 font-mono text-sm md:text-base
-                          shadow-lg shadow-cyan-500/30
-                          flex items-center gap-2
-                          font-medium
-                        "
-                        whileHover={{
-                          scale: 1.06,
-                          boxShadow: "0 0 25px rgba(34,211,238,0.5)",
-                        }}
+                        className="px-5 py-2.5 rounded-md bg-cyan-500 text-gray-950 font-mono text-sm md:text-base shadow-lg shadow-cyan-500/30 flex items-center gap-2 font-medium"
+                        whileHover={{ scale: 1.06, boxShadow: "0 0 25px rgba(34,211,238,0.5)" }}
                         whileTap={{ scale: 0.95 }}
                         aria-label="View source code on GitHub"
                       >
@@ -455,18 +437,8 @@ export default function ProjectsSection() {
                       <motion.a
                         href={projects[index].liveLink}
                         target="_blank"
-                        className="
-                  px-5 py-2.5 rounded-md border border-cyan-500/50
-                  text-cyan-300 font-mono text-sm md:text-base
-                  backdrop-blur-sm
-                  flex items-center gap-2
-                  font-medium
-                "
-                        whileHover={{
-                          scale: 1.06,
-                          backgroundColor: "rgba(34,211,238,0.12)",
-                          borderColor: "rgba(34,211,238,0.7)",
-                        }}
+                        className="px-5 py-2.5 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm md:text-base backdrop-blur-sm flex items-center gap-2 font-medium"
+                        whileHover={{ scale: 1.06, backgroundColor: "rgba(34,211,238,0.12)", borderColor: "rgba(34,211,238,0.7)" }}
                         whileTap={{ scale: 0.95 }}
                         aria-label="See all work"
                       >
@@ -478,7 +450,7 @@ export default function ProjectsSection() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows – keep for md+ only */}
             <motion.button
               onClick={goPrev}
               className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 md:-translate-x-20 z-30 p-4 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all"
@@ -527,35 +499,19 @@ export default function ProjectsSection() {
                 x: index === i ? 0 : 20,
                 y: (i - index) * 10,
               }}
-              whileHover={{
-                scale: 1.1,
-                opacity: 1,
-                x: -10,
-              }}
+              whileHover={{ scale: 1.1, opacity: 1, x: -10 }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
               <div className="w-56 rounded-xl overflow-hidden shadow-2xl border-2 border-white/10">
                 <div className="relative h-32 overflow-hidden">
-                  <Image
-                    src={p.image}
-                    alt={p.title}
-                    width={400}
-                    height={400}
-                    className="w-full h-full object-cover"
-                  />
+                  <Image src={p.image} alt={p.title} width={400} height={400} className="w-full h-full object-cover" />
                   {index === i && (
-                    <motion.div
-                      className="absolute inset-0 border-4 rounded-t-xl"
-                      style={{ borderColor: p.color }}
-                      layoutId="activeBorder"
-                    />
+                    <motion.div className="absolute inset-0 border-4 rounded-t-xl" style={{ borderColor: p.color }} layoutId="activeBorder" />
                   )}
                 </div>
                 <div className="p-3 bg-slate-900/90 backdrop-blur-md">
                   <div className="flex items-center justify-between">
-                    <p className="text-xs font-bold text-white">
-                      [{p.id}] {p.title.split(" ")[0]}
-                    </p>
+                    <p className="text-xs font-bold text-white">[{p.id}] {p.title.split(" ")[0]}</p>
                     {index === i && (
                       <motion.div
                         className="w-2 h-2 rounded-full"
@@ -568,7 +524,6 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Active project glow */}
               {index === i && (
                 <motion.div
                   layoutId="activeGlow"
@@ -583,8 +538,8 @@ export default function ProjectsSection() {
         </motion.div>
       </div>
 
-      {/* Progress Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+      {/* Progress Indicator – desktop only now */}
+      <div className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 gap-2 z-20">
         {projects.map((_, i) => (
           <motion.button
             key={i}
@@ -595,17 +550,9 @@ export default function ProjectsSection() {
             className="group relative"
             whileHover={{ scale: 1.2 }}
           >
-            <div
-              className={`w-12 md:w-16 h-1 rounded-full transition-all ${
-                index === i ? "bg-white" : "bg-white/30"
-              }`}
-            >
+            <div className={`w-12 md:w-16 h-1 rounded-full transition-all ${index === i ? "bg-white" : "bg-white/30"}`}>
               {index === i && (
-                <motion.div
-                  className="h-full rounded-full"
-                  style={{ background: projects[i]!.color }}
-                  layoutId="activeProgress"
-                />
+                <motion.div className="h-full rounded-full" style={{ background: projects[i]!.color }} layoutId="activeProgress" />
               )}
             </div>
           </motion.button>

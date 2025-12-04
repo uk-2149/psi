@@ -5,8 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Volume2, VolumeX } from "lucide-react";
 
 const links = [
-  { label: "WORK", href: "#work" },
-  { label: "EXPERIMENTS", href: "#experiments" },
+  { label: "PROJECTS", href: "#projects" },
+  { label: "RESUME", href: "#resume" },
   { label: "ABOUT", href: "#about" },
   { label: "CONTACT", href: "#contact" },
 ];
