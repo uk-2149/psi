@@ -5,10 +5,17 @@ import {
   motion,
   useScroll,
   AnimatePresence,
-  useInView
+  useInView,
+  useTransform,
+  MotionValue,
+  TransformInputRange,
+  useMotionValue,
+  useSpring,
+  useMotionTemplate
 } from "framer-motion";
 import { ChevronLeft, ChevronRight, Github } from "lucide-react";
 import Image from "next/image";
+import { div } from "framer-motion/client";
 
 interface Project {
   id: string;
@@ -54,7 +61,7 @@ const projects: Project[] = [
     id: "03",
     title: "QuizGen",
     description:
-      "QuizGen is a web-based tool that allows users to upload typed documents or PDF files and convert them into customizable quizzes. It supports setting the difficulty level, choosing question types, and adding custom prompts to generate tailored quizzes. The quizzes can then be downloaded with answers at the end.",
+      "QuizGen is a tool that allows users to upload documents & convert them into customizable quizzes. It supports setting the difficulty level, choosing question types & adding custom prompts to generate tailored quizzes. The quizzes can then be downloaded with answers at the end.",
     image: "/QuizGen.png",
     category: "Web Development",
     color: "#34D399",
@@ -78,6 +85,117 @@ const projects: Project[] = [
   },
 ];
 
+interface MobileCardProps {
+  p: Project;
+  i: number;
+  progress: MotionValue<number>;
+  range: TransformInputRange;
+}
+
+function MobileCard ({p, i, progress, range}: MobileCardProps) {
+  const container = useRef(null);
+  const isLast = i === projects.length - 1;
+  const targetScale = isLast ? 1 : 0.90;
+  const targetOpacity = isLast ? 1 : 0.8;
+  const targetBrightness = isLast ? "brightness(100%)" : "brightness(75%)";
+  const filter = useTransform(progress, range, ["brightness(100%)", targetBrightness]); 
+  const opacity = useTransform(progress, range, [1, targetOpacity]); 
+  const scale = useTransform(progress, range, [1, targetScale]);
+  const topOffset = `calc(120px + ${i * 50}px)`;
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+
+  function handleMouseMove({ currentTarget, clientX, clientY }: any) {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    x.set(clientX - left);
+    y.set(clientY - top);
+  }
+
+  const spotlight = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.06), transparent 80%)`;
+
+  return (
+    <div className="flex justify-center sticky" style={{ top: topOffset }}>
+      <motion.article
+              key={p.id}
+              className="rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl shadow-2xl origin-top perspective-1000"
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * 0.05 }}
+              style={{ filter, opacity, scale, zIndex: i }} 
+            >
+              {/* Image */}
+              <div className="relative h-48 w-full overflow-hidden" onMouseMove={handleMouseMove}>
+                <Image
+                  src={p.image}
+                  alt={p.title}
+                  fill
+                  className="object-cover"
+                  priority={i < 2}
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/60 to-transparent" />
+                <div
+                  className="absolute top-3 right-3 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider border"
+                  style={{ borderColor: `${p.color}80`, color: p.color, background: "#0b1220cc" }}
+                >
+                  {p.category}
+                </div>
+              </div>
+
+              {/* Body */}
+              <div className="p-4 space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-base font-mono font-bold">
+                  <span className="text-green-400">$</span>
+                  {p.title}
+                </div>
+
+                <p className="text-gray-300/90 text-sm leading-relaxed">
+                  {p.description}
+                </p>
+
+                {/* Tech chips – horizontal scroll if overflow */}
+                <div className="flex gap-2 flex-wrap pt-1">
+                  {p.techStack.map((t) => (
+                    <span
+                      key={t}
+                      className="shrink-0 px-2.5 py-1 text-[11px] font-mono bg-slate-900/70 border border-cyan-700/30 text-cyan-200 rounded-full"
+                    >
+                      ◆ {t}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-2 pt-2">
+                  <a
+                    href={p.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-md bg-cyan-500 text-slate-950 font-mono text-sm shadow-lg shadow-cyan-500/30"
+                    aria-label="View source code on GitHub"
+                  >
+                    <Github className="h-4 w-4" />
+                    GitHub
+                  </a>
+                  <a
+                    href={p.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm backdrop-blur-sm"
+                    aria-label="Open live demo"
+                  >
+                    ↗
+                  </a>
+                </div>
+              </div>
+            </motion.article>
+
+    </div>
+  )
+}
+
 export default function ProjectsSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -87,7 +205,7 @@ export default function ProjectsSection() {
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"],
+    offset: ['start start', 'end end']
   });
 
   const goPrev = () => {
@@ -137,7 +255,7 @@ export default function ProjectsSection() {
   return (
     <motion.section
       ref={sectionRef}
-      className="relative min-h-screen overflow-hidden"
+      className="relative min-h-screen overflow-visible md:overflow-hidden w-screen"
       animate={{
         // gradient stays while section is in view (mobile & desktop)
         background: isInView
@@ -146,6 +264,7 @@ export default function ProjectsSection() {
       }}
     >
       {/* Animated gradient orbs */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <motion.div
         className="absolute top-45 left-20 w-96 h-96 rounded-full opacity-20 blur-3xl"
         style={{ background: projects[index].color }}
@@ -160,13 +279,14 @@ export default function ProjectsSection() {
       />
 
       {/* Grain texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.15] mix-blend-overlay">
+      <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay overflow-hidden">
         <svg className="w-full h-full">
           <filter id="noise">
             <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
           </filter>
           <rect width="100%" height="100%" filter="url(#noise)" />
         </svg>
+      </div>
       </div>
 
       {/* MOBILE-ONLY LAYOUT */}
@@ -180,82 +300,14 @@ export default function ProjectsSection() {
         </div>
 
         {/* Snap scroller: one polished card per viewport */}
-        <div className="h-[calc(100vh-64px)] overflow-y-auto snap-y snap-mandatory px-4 space-y-6 pb-10">
-          {projects.map((p, i) => (
-            <motion.article
-              key={p.id}
-              className="snap-start rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl shadow-2xl"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-            >
-              {/* Image */}
-              <div className="relative h-48 w-full overflow-hidden">
-                <Image
-                  src={p.image}
-                  alt={p.title}
-                  fill
-                  className="object-cover"
-                  priority={i < 2}
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-slate-950 via-slate-950/60 to-transparent" />
-                <div
-                  className="absolute top-3 right-3 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider border"
-                  style={{ borderColor: `${p.color}80`, color: p.color, background: "#0b1220cc" }}
-                >
-                  {p.category}
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-4 space-y-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-base font-mono font-bold">
-                  <span className="text-green-400">$</span>
-                  {p.title}
-                </div>
-
-                <p className="text-gray-300/90 text-sm leading-relaxed">
-                  {p.description}
-                </p>
-
-                {/* Tech chips – horizontal scroll if overflow */}
-                <div className="flex gap-2 overflow-x-auto no-scrollbar pt-1">
-                  {p.techStack.map((t) => (
-                    <span
-                      key={t}
-                      className="shrink-0 px-2.5 py-1 text-[11px] font-mono bg-slate-900/70 border border-cyan-700/30 text-cyan-200 rounded-full"
-                    >
-                      ◆ {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-2 pt-2">
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-md bg-cyan-500 text-slate-950 font-mono text-sm shadow-lg shadow-cyan-500/30"
-                    aria-label="View source code on GitHub"
-                  >
-                    <Github className="h-4 w-4" />
-                    GitHub
-                  </a>
-                  <a
-                    href={p.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm backdrop-blur-sm"
-                    aria-label="Open live demo"
-                  >
-                    ↗
-                  </a>
-                </div>
-              </div>
-            </motion.article>
-          ))}
+        <div className="px-4 relative space-y-6 pb-10" style={{ height: `${projects.length * 80}dvh` }}>
+          {projects.map((p, i) => {
+            const rangeStart = i * (1 / (projects.length - 1));
+          const rangeEnd = (i + 1) * (1 / (projects.length - 1));
+          return (
+            <MobileCard key={p.id} p={p} i={i} progress={scrollYProgress} range={[rangeStart, rangeEnd]} />
+          )
+          })}
         </div>
       </div>
 
