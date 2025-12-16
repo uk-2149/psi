@@ -12,13 +12,13 @@ export default function HeroSection() {
         {/* <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-yellow-500/5 rounded-full blur-3xl animate-pulse delay-1000"></div> */}
       </div>
 
-      <div className="relative z-10 flex flex-col md:flex-row justify-between items-center px-6 md:px-16 py-12 md:py-20 max-w-7xl mx-auto">
+      <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center px-6 md:px-16 py-12 md:py-20 max-w-7xl mx-auto">
         {/* LEFT IMAGE BLOCK */}
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full md:w-1/2 flex justify-center md:justify-start mb-12 md:mb-0"
+          className="relative w-full md:w-1/2 flex justify-center lg:justify-start mb-12 md:mb-0"
         >
           <div className="relative group">
             {/* Image Container */}
@@ -81,7 +81,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full md:w-1/2 max-w-xl text-center md:text-left space-y-6"
+          className="w-full md:w-1/2 max-w-xl text-center lg:text-left space-y-6"
         >
           {/* Greeting */}
           <motion.p
@@ -106,7 +106,7 @@ export default function HeroSection() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
-            className="text-xs md:text-sm tracking-widest text-textSecondary uppercase flex items-center justify-center md:justify-start gap-3"
+            className="text-xs md:text-sm tracking-widest text-textSecondary uppercase flex items-center justify-center lg:justify-start gap-3"
           >
             <span className="w-12 h-px bg-linear-to-br from-accent to-transparent"></span>
             WEB DEVELOPER &amp; TECH ENTHUSIAST
@@ -128,7 +128,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row justify-center md:justify-start gap-4 pt-4"
+            className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4"
           >
             <button className="group relative overflow-hidden bg-accent text-black px-7 py-3 font-semibold rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 flex items-center justify-center gap-2">
               <Mail className="w-4 h-4" />
@@ -149,7 +149,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:block"
       >
         <div className="w-6 h-10 border-2 border-neutral-700 rounded-full flex justify-center">
           <motion.div

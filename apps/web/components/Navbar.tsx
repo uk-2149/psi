@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Volume2, VolumeX } from "lucide-react";
+import SpotifyMini from "./Spotify";
 
 const links = [
   { label: "PROJECTS", href: "#projects" },
@@ -110,44 +111,10 @@ export default function Navbar() {
             </div>
 
             {/* Right – Sound + Time */}
-            <div className="relative z-10 flex items-center gap-4 text-xs md:text-sm">
-              <button
-                onClick={() => setSoundOn((v) => !v)}
-                className="group flex items-center gap-1.5 text-gray-400 transition-colors hover:text-white"
-              >
-                {soundOn ? (
-                  <Volume2 className="h-4 w-4" />
-                ) : (
-                  <VolumeX className="h-4 w-4" />
-                )}
+            <div className="relative z-10 flex items-center gap-4 text-xs -mr-18 md:mr-0 md:text-sm">
+              <SpotifyMini />
 
-                {/* Tiny waveform when ON */}
-                <div className="w-6 flex justify-center">
-                  {soundOn ? (
-                    <div className="flex gap-px">
-                      {[...Array(4)].map((_, i) => (
-                        <motion.span
-                          key={i}
-                          animate={{ height: [4, 12, 4] }}
-                          transition={{
-                            repeat: Infinity,
-                            duration: 0.6,
-                            delay: i * 0.08,
-                          }}
-                          className="block w-0.5 bg-white rounded-full"
-                          style={{ height: 4 }}
-                        />
-                      ))}
-                    </div>
-                  ) : (
-                    <span className="text-gray-500 tracking-[1px] text-[10px] font-bold">
-                      ••••
-                    </span>
-                  )}
-                </div>
-              </button>
-
-              <span className="font-mono text-gray-300">{fmt}</span>
+              <span className="hidden md:block font-mono text-gray-300">{fmt}</span>
             </div>
 
             {/* Mobile Hamburger */}

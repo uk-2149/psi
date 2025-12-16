@@ -73,7 +73,7 @@ export default function AboutMeSection() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-size-[24px_24px]"
       /> */}
 
-      <div className="mx-auto w-[85vw] px-0 pt-0 pb-4 lg:pb-8">
+      <div className="mx-auto w-[85vw] px-0 pt-0 pb-0">
         {/* Header Row */}
         <div className="grid grid-cols-1 items-end md:grid-cols-12 text-center h-[35vh]">
           <motion.div
