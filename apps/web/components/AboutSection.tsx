@@ -1,13 +1,20 @@
 "use client";
 
 import { motion, type Variants } from "framer-motion";
+import { GitHubCalendar } from "react-github-calendar";
+import Github from "./Github";
 
 // Pure Tailwind + Framer Motion. Scroll-reveal word-by-word.
 
 function ArrowRightIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" {...props}>
-      <path strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" />
+      <path
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M5 12h14M13 5l7 7-7 7"
+      />
     </svg>
   );
 }
@@ -40,7 +47,11 @@ function RevealText({ text, className }: { text: string; className?: string }) {
       className={className}
     >
       {text.split(" ").map((w, i) => (
-        <motion.span key={i} variants={word} className="inline-block will-change-transform">
+        <motion.span
+          key={i}
+          variants={word}
+          className="inline-block will-change-transform"
+        >
           {w}
           {i !== text.split(" ").length - 1 ? "\u00A0" : ""}
         </motion.span>
@@ -60,7 +71,7 @@ export default function AboutMeSection() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-size-[24px_24px]"
       /> */}
 
-      <div className="mx-auto w-[85vw] px-0 pt-0 pb-4 lg:pb-8 border-r border-neutral-800">
+      <div className="mx-auto w-[85vw] px-0 pt-0 pb-4 lg:pb-8">
         {/* Header Row */}
         <div className="grid grid-cols-1 items-end md:grid-cols-12 text-center h-[35vh]">
           <motion.div
@@ -78,7 +89,7 @@ export default function AboutMeSection() {
           </motion.div>
 
           {/* Divider + hashmarks */}
-          <div className="md:col-span-5 flex w-full items-center gap-4 px-2 justify-end">
+          <div className="md:col-span-5 flex w-full items-end gap-4 px-2 justify-end border-r border-neutral-800 h-full">
             <div className="hidden h-px bg-neutral-300 md:block w-50" />
             <div className="text-[1rem] tracking-widest text-textPrimary select-none">
               {Array.from({ length: 24 }).map((_, i) => (
@@ -90,15 +101,34 @@ export default function AboutMeSection() {
         </div>
 
         {/* Content Panel (only short about text) */}
-        <div className="mt-0">
-          <div className="relative p-px">
-            <div className="p-6 sm:px-20 sm:py-15 border-l border-t border-b border-neutral-800 flex items-center justify-center">
+        <div className="mt-0 border-r border-neutral-800">
+          <div className="relative">
+            <div className="p-6 sm:px-20 sm:py-15 border-l border-t border-b border-r border-neutral-800 flex items-center justify-center">
               <RevealText
                 text={
                   "I love building things that feel smooth, look clean, and work fast. I pick up new stuff quickly, experiment a lot, and ship even faster. I’m all about solving problems, breaking things (sometimes on purpose), and learning from the chaos."
                 }
                 className="max-w-4xl text-2xl lg:text-4xl leading-tight text-neutral-200 sm:text-xl mask-[linear-gradient(180deg,rgba(0,0,0,1),rgba(0,0,0,0.75)_75%,transparent)]"
               />
+            </div>
+          </div>
+        </div>
+
+        {/* Content Panel (only short about text) */}
+        <div className="mt-0">
+          <div className="relative">
+            <div className="p-6 sm:px-20 py-20 sm:py-15 border-l border-t border-b border-neutral-800 flex items-center justify-center relative">
+              <Github />
+
+              <div className="absolute flex justify-end items-end bottom-0 right-2 text-[1rem] tracking-widest text-textPrimary select-none">
+                <div className="hidden h-px bg-neutral-300 md:block w-50 mr-3" />
+                {Array.from({ length: 24 }).map((_, i) => (
+                  <span key={i}>/</span>
+                ))}
+                <span className="ml-3 text-[0.5rem] align-middle self-center">
+                  ABT_ME
+                </span>
+              </div>
             </div>
           </div>
         </div>
