@@ -27,7 +27,7 @@ export default function HeroSection() {
                 src="/dP.jpeg"
                 alt="Utkal - Creative Web Developer"
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-cover transition-transform duration-700 group-hover:scale-105 rounded-tr-3xl"
                 priority
               />
 
