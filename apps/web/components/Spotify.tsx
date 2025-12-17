@@ -25,7 +25,8 @@ export default function SpotifyMini() {
 
   if (!track) return null;
 
-  const trackId = track.url.split("/track/")[1]?.split("?")[0];
+  // Safely extract track ID with proper null checks
+  const trackId = track.url?.split("/track/")?.[1]?.split("?")?.[0] || null;
 
   return (
     <div className="relative">

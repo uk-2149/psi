@@ -30,10 +30,10 @@ export async function GET() {
     if (!track) return NextResponse.json(null);
 
     return NextResponse.json({
-      title: track.name,
-      artist: track.artists.map((a: any) => a.name).join(", "),
-      albumArt: track.album.images[0].url,
-      url: track.external_urls.spotify,
+      title: track.name || "Unknown Track",
+      artist: track.artists?.map((a: any) => a.name).join(", ") || "Unknown Artist",
+      albumArt: track.album?.images?.[0]?.url || "",
+      url: track.external_urls?.spotify || "",
     });
   } catch (err) {
     return NextResponse.json(
