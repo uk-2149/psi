@@ -20,7 +20,7 @@ export async function GET() {
     if (!response.ok) {
       return NextResponse.json(
         { error: "Spotify API error" },
-        { status: 500 }
+        { status: response.status }
       );
     }
 

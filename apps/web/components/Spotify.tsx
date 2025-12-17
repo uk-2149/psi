@@ -20,10 +20,23 @@ export default function SpotifyMini() {
     fetch("/api/spotify")
       .then(res => res.json())
       .then(setTrack)
-      .catch(() => {});
+      .catch(() => {})
   }, []);
 
-  if (!track) return null;
+  if (!track) {
+    return (
+        <div
+        className="flex items-center gap-2 rounded-full bg-neutral-800/70
+                   px-2 py-1.5 hover:bg-neutral-700/80 transition-colors"
+      >
+        <div className="h-6 w-6 rounded-full bg-neutral-700 animate-pulse" />
+        <div className="flex flex-col max-w-[120px] overflow-hidden">
+          <div className="h-3 w-20 bg-neutral-700 rounded mb-1 animate-pulse" />
+          <div className="h-3 w-16 bg-neutral-700 rounded animate-pulse" />
+        </div>
+      </div>
+    )
+  }
 
   // Safely extract track ID with proper null checks
   const trackId = track.url?.split("/track/")?.[1]?.split("?")?.[0] || null;

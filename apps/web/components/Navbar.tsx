@@ -55,9 +55,6 @@ export default function Navbar() {
   /* ---------- Mobile menu ---------- */
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  /* ---------- Sound toggle ---------- */
-  const [soundOn, setSoundOn] = useState(false);
-
   /* ---------- Live clock ---------- */
   const [time, setTime] = useState(() => new Date());
 
@@ -87,7 +84,7 @@ export default function Navbar() {
           >
             {/* Grain overlay (subtle texture) */}
             <div className="pointer-events-none absolute inset-0 opacity-30">
-              <div className="h-full w-full bg-[url('/grain.png')] mix-blend-overlay" />
+              <div className="h-full w-full bg-[linear-gradient(to_right,#0f0f0f_2px,transparent_2px)] bg-size[4px_4px] mix-blend-overlay" />
             </div>
 
             {/* Left – Logo */}
@@ -178,18 +175,7 @@ export default function Navbar() {
               </nav>
 
               <div className="mt-auto flex items-center gap-4 text-sm">
-                <button
-                  onClick={() => setSoundOn((v) => !v)}
-                  className="flex items-center gap-2 text-gray-400 hover:text-white"
-                >
-                  {soundOn ? (
-                    <Volume2 className="h-5 w-5" />
-                  ) : (
-                    <VolumeX className="h-5 w-5" />
-                  )}
-                  {soundOn ? "ON" : "OFF"}
-                </button>
-                <span className="text-gray-500">••••</span>
+                <SpotifyMini />
                 <span className="font-mono text-gray-300">{fmt}</span>
               </div>
             </motion.div>
