@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="relative mt-0">
+    <footer id="footer" className="relative mt-0">
       {/* Polygon Border Layer */}
       <div
         className="absolute inset-0 top-0 bg-neutral-800"
@@ -70,14 +70,14 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a className="hover:text-white transition" href="#">
+                <a className="hover:text-white transition" href="https://www.linkedin.com/in/ukd9721/" target="_blank" rel="noreferrer">
                   LinkedIn
                 </a>
               </li>
               <li>
                 <a
                   className="hover:text-white transition"
-                  href="mailto:your@email.com"
+                  href="mailto:utkal2149@mail.com"
                 >
                   Email
                 </a>

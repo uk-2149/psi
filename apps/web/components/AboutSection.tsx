@@ -5,6 +5,7 @@ import { GitHubCalendar } from "react-github-calendar";
 import Github from "./Github";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import ContactModal from "./ContactModal";
 
 // Pure Tailwind + Framer Motion. Scroll-reveal word-by-word.
 
@@ -64,9 +65,10 @@ function RevealText({ text, className }: { text: string; className?: string }) {
 
 export default function AboutMeSection() {
   const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+  const[showModal, setShowModal] = useState(false);
 
   return (
-    <section className="relative w-full overflow-hidden bg-bg text-neutral-100">
+    <section id="about" className="relative w-full overflow-hidden bg-bg text-neutral-100">
       {/* Subtle grid texture */}
       {/* <div
         aria-hidden
@@ -170,6 +172,7 @@ export default function AboutMeSection() {
                       transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5
                       shadow-md
                     "
+                    onClick={() => setShowModal(true)}
                   >
                     Send a message
                   </button>
@@ -183,6 +186,7 @@ export default function AboutMeSection() {
           </div>
         </div>
       </div>
+      {showModal && <ContactModal setOpen={setShowModal} open={showModal}/>}
     </section>
   );
 }

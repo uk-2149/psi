@@ -7,9 +7,9 @@ import SpotifyMini from "./Spotify";
 
 const links = [
   { label: "PROJECTS", href: "#projects" },
-  { label: "RESUME", href: "#resume" },
+  { label: "RESUME", href: "https://drive.google.com/file/d/1nl0942jxqTrDcQVXpuhQyjc-evjdWP1U/view" },
   { label: "ABOUT", href: "#about" },
-  { label: "CONTACT", href: "#contact" },
+  { label: "CONTACT", href: "#footer" },
 ];
 
 export default function Navbar() {
@@ -17,6 +17,12 @@ export default function Navbar() {
   const [visible, setVisible] = useState(true);
   const [lastY, setLastY] = useState(0);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleScroll = (id: string) => {
+  const el = document.getElementById(id);
+  el?.scrollIntoView({ behavior: "smooth" });
+};
+
 
   const controlNavbar = () => {
     const currentY = window.scrollY;
@@ -101,6 +107,7 @@ export default function Navbar() {
                 <a
                   key={l.href}
                   href={l.href}
+                  onClick={() => handleScroll(l.href)}
                   className="relative text-gray-300 transition-colors duration-200 hover:text-white
                              after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0
                              after:bg-white after:transition-all after:duration-300 hover:after:w-full"
@@ -162,7 +169,7 @@ export default function Navbar() {
                   <a
                     key={l.href}
                     href={l.href}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => {setMobileOpen(false); handleScroll(l.href)}}
                     className="text-gray-300 transition-colors hover:text-white"
                   >
                     {l.label}

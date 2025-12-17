@@ -2,8 +2,12 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Play, Mail, ArrowRight, X } from "lucide-react";
+import { useState } from "react";
+import ContactModal from "../ContactModal";
 
 export default function HeroSection() {
+  const[showModal, setShowModal] = useState(false);
+
   return (
     <section className="relative min-h-[90vh] bg-bg text-textPrimary overflow-hidden mt-15">
       {/* Background Gradient Orbs */}
@@ -18,11 +22,11 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative w-full md:w-1/2 flex justify-center lg:justify-start mb-12 md:mb-0"
+          className="relative w-full lg:w-1/2 flex justify-center lg:justify-start mb-12 md:mb-0"
         >
           <div className="relative group">
             {/* Image Container */}
-            <div className="relative w-[280px] h-80 md:w-[360px] md:h-[440px] lg:w-[400px] lg:h-[480px] rounded-tr-3xl overflow-hidden border border-neutral-700/50 shadow-2xl backdrop-blur-sm transition-all duration-500 group-hover:border-accent/50 group-hover:shadow-accent/20">
+            <div className="relative w-[280px] h-80 md:w-[400px] md:h-[440px] lg:w-[400px] lg:h-[480px] rounded-tr-3xl overflow-hidden border border-neutral-700/50 shadow-2xl backdrop-blur-sm transition-all duration-500 group-hover:border-accent/50 group-hover:shadow-accent/20">
               <Image
                 src="/dP.jpeg"
                 alt="Utkal - Creative Web Developer"
@@ -81,7 +85,7 @@ export default function HeroSection() {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full md:w-1/2 max-w-xl text-center lg:text-left space-y-6"
+          className="w-full lg:w-1/2 lg:max-w-xl text-center lg:text-left space-y-6 flex flex-col items-center lg:items-start"
         >
           {/* Greeting */}
           <motion.p
@@ -95,7 +99,7 @@ export default function HeroSection() {
           </motion.p>
 
           {/* Main Headline */}
-          <h1 className="text-[2.8rem] md:text-[4rem] lg:text-[4.8rem] leading-[0.95] font-bold tracking-tighter bg-linear-to-br from-textPrimary via-textPrimary to-accent bg-clip-text text-transparent">
+          <h1 className="text-[2.8rem] md:text-[4rem] w-full lg:text-[4.8rem] leading-[0.95] font-bold tracking-tighter bg-linear-to-br from-textPrimary via-textPrimary to-accent bg-clip-text text-transparent">
             CREATIVE
             <br />
             FULL-STACK DEVELOPER
@@ -130,7 +134,7 @@ export default function HeroSection() {
             transition={{ delay: 0.6 }}
             className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4"
           >
-            <button className="group relative overflow-hidden bg-accent text-black px-7 py-3 font-semibold rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 flex items-center justify-center gap-2">
+            <button className="group relative overflow-hidden bg-accent text-black px-7 py-3 font-semibold rounded-sm transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:-translate-y-0.5 flex items-center justify-center gap-2" onClick={() => setShowModal(true)}>
               <Mail className="w-4 h-4" />
               Get in touch
               <span className="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-0 transition-transform duration-300"></span>
@@ -159,6 +163,8 @@ export default function HeroSection() {
           />
         </div>
       </motion.div>
+
+      {showModal && <ContactModal setOpen={setShowModal} open={showModal}/>}
     </section>
   );
 }

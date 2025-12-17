@@ -116,7 +116,7 @@ function MobileCard ({p, i, progress, range}: MobileCardProps) {
   const spotlight = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.06), transparent 80%)`;
 
   return (
-    <div className="flex justify-center sticky" style={{ top: topOffset }}>
+    <section id="projects" className="flex justify-center sticky" style={{ top: topOffset }}>
       <motion.article
               key={p.id}
               className="rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl shadow-2xl origin-top perspective-1000"
@@ -192,7 +192,7 @@ function MobileCard ({p, i, progress, range}: MobileCardProps) {
               </div>
             </motion.article>
 
-    </div>
+    </section>
   )
 }
 
