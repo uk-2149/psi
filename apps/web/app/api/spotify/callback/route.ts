@@ -28,7 +28,7 @@ export async function GET(req: Request) {
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri: "http://127.0.0.1:3000/api/spotify/callback",
+        redirect_uri: "https://uk-psi.vercel.app/api/spotify/callback",
       }),
     }
   );
