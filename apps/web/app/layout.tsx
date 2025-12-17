@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import OnekoCat from "../components/OnekoCat";
 import TitleWatcher from "../components/TitleWatcher";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} overflow-x-hidden`}>
         <TitleWatcher />
         {children}
+        <Analytics />
         <OnekoCat />
       </body>
     </html>
