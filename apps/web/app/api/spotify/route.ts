@@ -2,10 +2,18 @@ import { NextResponse } from "next/server";
 import { getAccessToken } from "../../lib/spotify";
 
 export const revalidate = 60; // cache for 60 seconds
+export const runtime = "nodejs";
 
 export async function GET() {
   try {
     const { access_token } = await getAccessToken();
+
+    if (!access_token) {
+      return NextResponse.json(
+        { error: "No access token" },
+        { status: 500 }
+      );
+    }
 
     const response = await fetch(
       "https://api.spotify.com/v1/me/player/recently-played?limit=1",

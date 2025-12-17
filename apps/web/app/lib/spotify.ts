@@ -1,9 +1,11 @@
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
 export async function getAccessToken() {
-  const basicAuth = btoa(
-  `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`
-);
+  const basicAuth = Buffer.from(
+    process.env.SPOTIFY_CLIENT_ID +
+      ":" +
+      process.env.SPOTIFY_CLIENT_SECRET
+  ).toString("base64");
 
   const res = await fetch(TOKEN_ENDPOINT, {
     method: "POST",
@@ -18,7 +20,7 @@ export async function getAccessToken() {
   });
 
   if (!res.ok) {
-    throw new Error("Failed to refresh Spotify access token");
+    throw new Error("Failed to refresh Spotify access token", { cause: res });
   }
 
   return res.json();
