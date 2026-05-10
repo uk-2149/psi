@@ -33,6 +33,19 @@ interface Project {
 const projects: Project[] = [
   {
     id: "01",
+    title: "Qurato",
+    description:
+      "Transform YouTube playlists into distraction-free courses. Track progress with GitHub-like heatmaps, organize lessons, mark completion, and share custom learning paths. Perfect for focused learning without YouTube distractions.",
+    image: "/qurato.png",
+    category: "Web Development",
+    color: "#6366F1",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "MongoDB", "NextAuth.js", "YouTube API"],
+    github: "https://github.com/uk-2149/Qurato",
+    liveLink: "https://qurato.utkal.xyz/",
+    scale: 80,
+  },
+  {
+    id: "02",
     title: "ChitChat",
     description:
       "A cutting-edge, full-stack real-time communication platform that brings people together through seamless messaging, crystal-clear video calls, and intelligent AI assistance.",
@@ -45,7 +58,7 @@ const projects: Project[] = [
     scale: 50,
   },
   {
-    id: "02",
+    id: "03",
     title: "Draw.wine",
     description:
       "A modern, real-time collaborative drawing application, allows multiple users to collaborate on digital canvases in real-time with a rich set of drawing tools and features.",
@@ -58,7 +71,7 @@ const projects: Project[] = [
     scale: 90,
   },
   {
-    id: "03",
+    id: "05",
     title: "QuizGen",
     description:
       "QuizGen is a tool that allows users to upload documents & convert them into customizable quizzes. It supports setting the difficulty level, choosing question types & adding custom prompts to generate tailored quizzes. The quizzes can then be downloaded with answers at the end.",
@@ -71,7 +84,7 @@ const projects: Project[] = [
     scale: 70,
   },
   {
-    id: "04",
+    id: "06",
     title: "Testimonial.io clone",
     description:
       "A platform to collect, manage, and showcase client testimonials effortlessly. Create shareable links, customize displays, and embed them seamlessly into your website.",
@@ -82,19 +95,6 @@ const projects: Project[] = [
     github: "https://github.com/uk-2149/testimonial-clone",
     liveLink: "https://testimonial-uk-97.vercel.app/dashboard",
     scale: 100,
-  },
-  {
-    id: "05",
-    title: "Qurato",
-    description:
-      "Transform YouTube playlists into distraction-free courses. Track progress with GitHub-like heatmaps, organize lessons, mark completion, and share custom learning paths. Perfect for focused learning without YouTube distractions.",
-    image: "/qurato.png",
-    category: "Web Development",
-    color: "#6366F1",
-    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "MongoDB", "NextAuth.js", "YouTube API"],
-    github: "https://github.com/uk-2149/Qurato",
-    liveLink: "https://qurato.utkal.xyz/",
-    scale: 80,
   },
 ];
 
