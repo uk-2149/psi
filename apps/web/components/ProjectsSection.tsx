@@ -54,7 +54,7 @@ const projects: Project[] = [
     color: "#818CF8",
     techStack: ["React", "TypeScript", "Node.js", "Express", "Socket.IO", "Redis", "Helmet"],
     github: "https://github.com/uk-2149/draw.wine",
-    liveLink: "https://drawine.vercel.app/",
+    liveLink: "https://drawine.utkal.xyz/",
     scale: 90,
   },
   {
@@ -82,6 +82,19 @@ const projects: Project[] = [
     github: "https://github.com/uk-2149/testimonial-clone",
     liveLink: "https://testimonial-uk-97.vercel.app/dashboard",
     scale: 100,
+  },
+  {
+    id: "05",
+    title: "Qurato",
+    description:
+      "Transform YouTube playlists into distraction-free courses. Track progress with GitHub-like heatmaps, organize lessons, mark completion, and share custom learning paths. Perfect for focused learning without YouTube distractions.",
+    image: "/qurato.png",
+    category: "Web Development",
+    color: "#6366F1",
+    techStack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Prisma", "MongoDB", "NextAuth.js", "YouTube API"],
+    github: "https://github.com/uk-2149/Qurato",
+    liveLink: "https://qurato.utkal.xyz/",
+    scale: 80,
   },
 ];
 
