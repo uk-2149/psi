@@ -9,7 +9,9 @@
       "env": [
         "SPOTIFY_CLIENT_ID",
         "SPOTIFY_CLIENT_SECRET",
-        "SPOTIFY_REFRESH_TOKEN"
+        "SPOTIFY_REFRESH_TOKEN",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL"
       ]
     },
     "lint": {
@@ -17,7 +19,9 @@
       "env": [
         "SPOTIFY_CLIENT_ID",
         "SPOTIFY_CLIENT_SECRET",
-        "SPOTIFY_REFRESH_TOKEN"
+        "SPOTIFY_REFRESH_TOKEN",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL"
       ]
     },
     "check-types": {
@@ -29,7 +33,9 @@
       "env": [
         "SPOTIFY_CLIENT_ID",
         "SPOTIFY_CLIENT_SECRET",
-        "SPOTIFY_REFRESH_TOKEN"
+        "SPOTIFY_REFRESH_TOKEN",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL"
       ]
     }
   }
