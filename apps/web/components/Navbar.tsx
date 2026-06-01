@@ -7,7 +7,7 @@ import SpotifyMini from "./Spotify";
 
 const links = [
   { label: "PROJECTS", href: "#projects" },
-  { label: "RESUME", href: "https://drive.google.com/file/d/1nl0942jxqTrDcQVXpuhQyjc-evjdWP1U/view" },
+  { label: "RESUME", href: "https://drive.google.com/file/d/1lksk5D-t8JQ7iyvLTFrR4HnrPLOH3m6R/view?usp=sharing" },
   { label: "ABOUT", href: "#about" },
   { label: "CONTACT", href: "#footer" },
 ];
