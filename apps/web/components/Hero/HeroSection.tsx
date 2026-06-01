@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Play, Mail, ArrowRight, X } from "lucide-react";
+import { Play, Mail, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import ContactModal from "../ContactModal";
 
@@ -9,7 +9,7 @@ export default function HeroSection() {
   const[showModal, setShowModal] = useState(false);
 
   return (
-    <section className="relative min-h-[90vh] bg-bg text-textPrimary overflow-hidden mt-15">
+    <section className="relative mt-15 min-h-[calc(100dvh-3.75rem)] bg-bg text-textPrimary overflow-hidden">
       {/* Background Gradient Orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-106 h-106 bg-accent/10 rounded-full blur-3xl animate-pulse"></div>
@@ -102,7 +102,7 @@ export default function HeroSection() {
           <h1 className="text-[2.8rem] md:text-[4rem] w-full lg:text-[4.8rem] leading-[0.95] font-bold tracking-tighter bg-linear-to-br from-textPrimary via-textPrimary to-accent bg-clip-text text-transparent">
             CREATIVE
             <br />
-            FULL-STACK DEVELOPER
+            SOFTWARE DEVELOPER
           </h1>
 
           {/* Subline */}
