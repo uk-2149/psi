@@ -151,115 +151,97 @@ interface MobileCardProps {
 
 function MobileCard ({p, i, progress, range, onLiveSoon}: MobileCardProps) {
   const isLast = i === projects.length - 1;
-  const targetScale = isLast ? 1 : 0.90;
-  const targetOpacity = isLast ? 1 : 0.8;
-  const targetBrightness = isLast ? "brightness(100%)" : "brightness(75%)";
-  const filter = useTransform(progress, range, ["brightness(100%)", targetBrightness]); 
-  const opacity = useTransform(progress, range, [1, targetOpacity]); 
+  const targetScale = isLast ? 1 : 0.92;
+  const targetBrightness = isLast ? "brightness(100%)" : "brightness(50%)";
   const scale = useTransform(progress, range, [1, targetScale]);
-  const topOffset = `calc(120px + ${i * 50}px)`;
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
-  const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+  const filter = useTransform(progress, range, ["brightness(100%)", targetBrightness]);
 
-  function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent<HTMLDivElement>) {
-    const { left, top } = currentTarget.getBoundingClientRect();
-    x.set(clientX - left);
-    y.set(clientY - top);
-  }
-
-  const spotlight = useMotionTemplate`radial-gradient(600px circle at ${mouseX}px ${mouseY}px, rgba(255,255,255,0.06), transparent 80%)`;
+  // Adjust offset slightly per card so they stack visibly
+  const topOffset = `calc(32px + ${i * 12}px)`;
 
   return (
-    <section id="projects" className="flex justify-center sticky" style={{ top: topOffset }}>
+    <div className="sticky flex justify-center w-full mb-[20vh]" style={{ top: topOffset, zIndex: i }}>
       <motion.article
-              key={p.id}
-              className="rounded-2xl overflow-hidden border border-cyan-500/30 bg-slate-950/90 backdrop-blur-xl shadow-2xl origin-top perspective-1000"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.5, delay: i * 0.05 }}
-              style={{ filter, opacity, scale, zIndex: i }} 
+        className="rounded-3xl overflow-hidden border border-cyan-500/30 bg-slate-950/95 backdrop-blur-xl shadow-2xl relative w-full origin-top"
+        style={{ scale, filter }}
+      >
+        {/* Image */}
+        <div className="relative p-2">
+          <div
+            className="relative overflow-hidden rounded-2xl border border-cyan-300/20 bg-slate-950 shadow-inner"
+            style={{ aspectRatio: "16 / 9" }}
+          >
+            <ScreenshotImage project={p} priority={i < 2} />
+          </div>
+          <div
+            className="absolute top-4 right-4 px-2 py-0.5 rounded-md text-[9px] font-mono uppercase tracking-wider border backdrop-blur-md"
+            style={{ borderColor: `${p.color}80`, color: p.color, background: "#0b1220cc" }}
+          >
+            {p.category}
+          </div>
+        </div>
+
+        {/* Body */}
+        <div className="p-4 md:p-5 space-y-3">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-base font-mono font-bold">
+            <span className="text-green-400">$</span>
+            {p.title}
+          </div>
+
+          <p className="text-gray-300/90 text-sm leading-relaxed">
+            {p.description}
+          </p>
+
+          {/* Tech chips */}
+          <div className="flex gap-2 flex-wrap pt-1">
+            {p.techStack.slice(0, 4).map((t) => (
+              <span
+                key={t}
+                className="shrink-0 px-2 py-0.5 text-[10px] font-mono bg-slate-900/70 border border-cyan-700/30 text-cyan-200 rounded-full"
+              >
+                {t}
+              </span>
+            ))}
+            {p.techStack.length > 4 && (
+              <span className="shrink-0 px-2 py-0.5 text-[10px] font-mono text-cyan-400/70">
+                +{p.techStack.length - 4}
+              </span>
+            )}
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-3 pt-3">
+            <a
+              href={p.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 text-slate-950 font-mono text-sm font-bold shadow-lg shadow-cyan-500/30 active:scale-95 transition-transform"
             >
-              {/* Image */}
-              <div className="relative p-3" onMouseMove={handleMouseMove}>
-                <div
-                  className="relative overflow-hidden rounded-xl border border-cyan-300/35 bg-slate-950 shadow-2xl shadow-cyan-500/10"
-                  style={{ aspectRatio: p.screenshotRatio }}
-                >
-                  <ScreenshotImage project={p} priority={i < 2} />
-                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
-                  <motion.div className="absolute inset-0" style={{ background: spotlight }} />
-                </div>
-                <div
-                  className="absolute top-3 right-3 px-2.5 py-1 rounded-md text-[10px] font-mono uppercase tracking-wider border"
-                  style={{ borderColor: `${p.color}80`, color: p.color, background: "#0b1220cc" }}
-                >
-                  {p.category}
-                </div>
-              </div>
-
-              {/* Body */}
-              <div className="p-4 space-y-3">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-cyan-500/10 border border-cyan-500/40 text-cyan-300 text-base font-mono font-bold">
-                  <span className="text-green-400">$</span>
-                  {p.title}
-                </div>
-
-                <p className="text-gray-300/90 text-sm leading-relaxed">
-                  {p.description}
-                </p>
-
-                {/* Tech chips – horizontal scroll if overflow */}
-                <div className="flex gap-2 flex-wrap pt-1">
-                  {p.techStack.map((t) => (
-                    <span
-                      key={t}
-                      className="shrink-0 px-2.5 py-1 text-[11px] font-mono bg-slate-900/70 border border-cyan-700/30 text-cyan-200 rounded-full"
-                    >
-                      ◆ {t}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-2 pt-2">
-                  <a
-                    href={p.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 rounded-md bg-cyan-500 text-slate-950 font-mono text-sm shadow-lg shadow-cyan-500/30"
-                    aria-label="View source code on GitHub"
-                  >
-                    <Github className="h-4 w-4" />
-                    GitHub
-                  </a>
-                  {p.liveLink ? (
-                    <a
-                      href={p.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm backdrop-blur-sm"
-                      aria-label={`Open ${p.title} live demo`}
-                    >
-                      ↗
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={onLiveSoon}
-                      className="px-4 py-2 rounded-md border border-cyan-500/50 text-cyan-300 font-mono text-sm backdrop-blur-sm"
-                      aria-label={`${p.title} live demo will be live soon`}
-                    >
-                      ↗
-                    </button>
-                  )}
-                </div>
-              </div>
-            </motion.article>
-
-    </section>
+              <Github className="h-4 w-4" />
+              GitHub
+            </a>
+            {p.liveLink ? (
+              <a
+                href={p.liveLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/50 text-cyan-300 font-mono text-sm font-bold backdrop-blur-sm active:scale-95 transition-transform"
+              >
+                Live ↗
+              </a>
+            ) : (
+              <button
+                type="button"
+                onClick={onLiveSoon}
+                className="flex-1 flex justify-center items-center gap-2 px-4 py-2.5 rounded-xl border border-cyan-500/50 text-cyan-300 font-mono text-sm font-bold backdrop-blur-sm active:scale-95 transition-transform"
+              >
+                Soon ↗
+              </button>
+            )}
+          </div>
+        </div>
+      </motion.article>
+    </div>
   )
 }
 
@@ -325,13 +307,18 @@ export default function ProjectsSection() {
   useEffect(() => {
     const updatePinnedState = () => {
       const section = sectionRef.current;
-      if (!section || window.innerWidth < 768) {
+      if (!section) {
         setIsProjectPinned(false);
         return;
       }
 
       const rect = section.getBoundingClientRect();
-      setIsProjectPinned(rect.top <= 1 && rect.bottom > window.innerHeight);
+      // Fade in when top hits 25% down the screen
+      // Fade out smoothly before the bottom is visible (e.g. 20% below the screen)
+      setIsProjectPinned(
+        rect.top <= window.innerHeight * 0.25 && 
+        rect.bottom >= window.innerHeight * 1.2
+      );
     };
 
     updatePinnedState();
@@ -375,24 +362,60 @@ export default function ProjectsSection() {
       className="relative min-h-screen overflow-visible bg-bg md:h-[var(--projects-scroll-height)] md:overflow-visible w-screen"
       style={{ "--projects-scroll-height": `${projects.length * 100}vh` } as React.CSSProperties}
     >
+      {/* GLOBAL BACKGROUND EFFECT */}
+      <div className="sticky top-0 h-0 w-full pointer-events-none z-0">
+        <div className="absolute top-0 left-0 w-full h-screen overflow-hidden">
+          <div
+            className={`absolute inset-0 bg-[linear-gradient(135deg,#312E81_0%,#1E1B4B_100%)] transition-opacity duration-1000 ${
+              isProjectPinned ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <div
+            className={`absolute inset-0 overflow-hidden transition-opacity duration-1000 ${
+              isProjectPinned ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <motion.div
+              className="absolute left-[-3rem] top-[32%] h-[30rem] w-[30rem] rounded-full bg-sky-300/45 blur-[78px] mix-blend-screen"
+              animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.68, 0.5] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            />
+            <motion.div
+              className="absolute right-[-3rem] top-[38%] h-[29rem] w-[29rem] rounded-full bg-pink-400/45 blur-[78px] mix-blend-screen"
+              animate={{ scale: [1.08, 1, 1.08], opacity: [0.66, 0.46, 0.66] }}
+              transition={{ duration: 4, repeat: Infinity, delay: 2 }}
+            />
+
+            <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay overflow-hidden">
+              <svg className="h-full w-full">
+                <filter id="projects-noise">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
+                </filter>
+                <rect width="100%" height="100%" filter="url(#projects-noise)" />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* MOBILE-ONLY LAYOUT */}
-      <div className="md:hidden relative z-20">
+      <div className="md:hidden relative z-20 w-full px-4 pt-12 pb-24">
         {/* Title strip */}
-        <div className="px-4 pt-10 pb-2">
+        <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-white/10 border border-white/20 text-white/80 text-xs uppercase tracking-widest">
-            <span className="w-2 h-2 bg-green-400 rounded-full" />
-            Web Development
+            <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+            Selected Work
           </div>
         </div>
 
-        {/* Snap scroller: one polished card per viewport */}
-        <div className="px-4 relative space-y-6 pb-10" style={{ height: `${projects.length * 80}dvh` }}>
+        {/* Stacking scroller */}
+        <div className="relative">
           {projects.map((p, i) => {
-            const rangeStart = i * (1 / (projects.length - 1));
-          const rangeEnd = (i + 1) * (1 / (projects.length - 1));
-          return (
-            <MobileCard key={p.id} p={p} i={i} progress={scrollYProgress} range={[rangeStart, rangeEnd]} onLiveSoon={showLiveSoonToast} />
-          )
+            const rangeStart = i * (1 / projects.length);
+            const rangeEnd = (i + 1) * (1 / projects.length);
+            return (
+              <MobileCard key={p.id} p={p} i={i} progress={scrollYProgress} range={[rangeStart, rangeEnd]} onLiveSoon={showLiveSoonToast} />
+            )
           })}
         </div>
       </div>
@@ -401,36 +424,7 @@ export default function ProjectsSection() {
       <div
         className="sticky top-0 hidden h-screen items-center justify-between overflow-hidden px-4 md:flex md:px-8 lg:px-16"
       >
-        <div
-          className={`pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#312E81_0%,#1E1B4B_100%)] transition-opacity duration-500 ${
-            isProjectPinned ? "opacity-100" : "opacity-0"
-          }`}
-        />
-        <div
-          className={`pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-500 ${
-            isProjectPinned ? "opacity-100" : "opacity-0"
-          }`}
-        >
-          <motion.div
-            className="absolute left-[-3rem] top-[32%] h-[30rem] w-[30rem] rounded-full bg-sky-300/45 blur-[78px] mix-blend-screen"
-            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.68, 0.5] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute right-[-3rem] top-[38%] h-[29rem] w-[29rem] rounded-full bg-pink-400/45 blur-[78px] mix-blend-screen"
-            animate={{ scale: [1.08, 1, 1.08], opacity: [0.66, 0.46, 0.66] }}
-            transition={{ duration: 4, repeat: Infinity, delay: 2 }}
-          />
-
-          <div className="absolute inset-0 opacity-[0.15] mix-blend-overlay overflow-hidden">
-            <svg className="h-full w-full">
-              <filter id="projects-noise">
-                <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" />
-              </filter>
-              <rect width="100%" height="100%" filter="url(#projects-noise)" />
-            </svg>
-          </div>
-        </div>
+        {/* Background is now global above */}
 
         {/* LEFT SIDEBAR */}
         <motion.div
